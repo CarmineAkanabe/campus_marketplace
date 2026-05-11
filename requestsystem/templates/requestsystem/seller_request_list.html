@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>My Requests</h1>
+<h1>Incoming Requests</h1>
 <table class="table table-bordered">
     <thead>
         <tr>
             <th>Product</th>
+            <th>Buyer</th>
             <th>Status</th>
-            <th>Message</th>
             <th>Created</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         {% for request in requests %}
             <tr>
-                <td><a href="{% url 'requestsystem:request_detail' request.pk %}">{{ request.product.name }}</a></td>
+                <td>{{ request.product.name }}</td>
+                <td>{{ request.buyer.username }}</td>
                 <td>{{ request.status|capfirst }}</td>
-                <td>{{ request.message }}</td>
                 <td>{{ request.created_at|date:'M d, Y' }}</td>
+                <td><a href="{% url 'requestsystem:request_detail' request.pk %}" class="btn btn-sm btn-outline-primary">View</a></td>
             </tr>
         {% empty %}
             <tr>
-                <td colspan="4">No requests found.</td>
+                <td colspan="5">No incoming requests found.</td>
             </tr>
         {% endfor %}
     </tbody>

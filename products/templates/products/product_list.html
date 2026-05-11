@@ -2,6 +2,37 @@
 
 {% block content %}
 <h1>Available Products</h1>
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ search_values.q }}">
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="category" class="form-control" placeholder="Category" value="{{ search_values.category }}">
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="min_price" class="form-control" placeholder="Min price" value="{{ search_values.min_price }}">
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="max_price" class="form-control" placeholder="Max price" value="{{ search_values.max_price }}">
+    </div>
+    <div class="col-md-2">
+        <select name="condition" class="form-select">
+            <option value="">Any condition</option>
+            <option value="new" {% if search_values.condition == 'new' %}selected{% endif %}>New</option>
+            <option value="used" {% if search_values.condition == 'used' %}selected{% endif %}>Used</option>
+        </select>
+    </div>
+    <div class="col-md-1">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+{% if user.is_authenticated and user.role == 'seller' %}
+    <div class="mb-3">
+        <a class="btn btn-success" href="{% url 'products:product_create' %}">Create Product</a>
+    </div>
+{% endif %}
+
 <div class="row">
     {% for product in products %}
         <div class="col-md-4 mb-3">
@@ -11,7 +42,7 @@
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title"><a href="{% url 'products:product_detail' product.pk %}">{{ product.name }}</a></h5>
-                    <p class="card-text">Category: {{ product.category }}</p>
+                    <p class="card-text">{{ product.category }} &middot; {{ product.condition|capfirst }}</p>
                     <p class="card-text">Price: {{ product.price }}</p>
                 </div>
             </div>

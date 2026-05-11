@@ -26,3 +26,8 @@ class User(AbstractUser):
 
     def is_seller(self):
         return self.role == self.SELLER
+
+    def average_rating(self):
+        from django.db.models import Avg
+
+        return self.reviews_received.aggregate(avg=Avg('rating'))['avg'] or 0

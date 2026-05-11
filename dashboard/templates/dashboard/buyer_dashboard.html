@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Buyer Dashboard</h1>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h3>Recent Requests</h3>
+            <ul class="list-group list-group-flush">
+                {% for request in recent_requests %}
+                    <li class="list-group-item">
+                        <a href="{% url 'requestsystem:request_detail' request.pk %}">{{ request.product.name }}</a>
+                        <span class="badge bg-secondary float-end">{{ request.status|capfirst }}</span>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No recent requests.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h3>Recent Notifications</h3>
+            <ul class="list-group list-group-flush">
+                {% for notification in notifications %}
+                    <li class="list-group-item">
+                        {{ notification.title }}<br>
+                        <small class="text-muted">{{ notification.created_at|date:'M d, Y H:i' }}</small>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No notifications yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

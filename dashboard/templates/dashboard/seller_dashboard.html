@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Seller Dashboard</h1>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h3>Products</h3>
+            <p class="display-6">{{ product_count }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h3>Incoming Requests</h3>
+            <p class="display-6">{{ request_count }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h3>Recent Notifications</h3>
+            <ul class="list-group list-group-flush">
+                {% for notification in notifications %}
+                    <li class="list-group-item">
+                        {{ notification.title }}<br>
+                        <small class="text-muted">{{ notification.created_at|date:'M d, Y H:i' }}</small>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No notifications yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h3>Your Products</h3>
+            <ul class="list-group list-group-flush">
+                {% for product in products %}
+                    <li class="list-group-item">
+                        <a href="{% url 'products:product_detail' product.pk %}">{{ product.name }}</a>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No products yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h3>Recent Incoming Requests</h3>
+            <ul class="list-group list-group-flush">
+                {% for request in incoming_requests %}
+                    <li class="list-group-item">
+                        <a href="{% url 'requestsystem:request_detail' request.pk %}">{{ request.product.name }}</a>
+                        <span class="badge bg-secondary float-end">{{ request.status|capfirst }}</span>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No incoming requests.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
