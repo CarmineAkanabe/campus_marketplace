@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Seller Analytics</h1>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5>Total Products</h5>
+            <p class="display-6">{{ stats.total_products }}</p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-3">
+            <h5>Completed Requests</h5>
+            <p class="display-6">{{ stats.completed_requests }}</p>
+        </div>
+    </div>
+</div>
+<div class="card p-3 mb-4">
+    <h3>Top Products</h3>
+    <ul class="list-group list-group-flush">
+        {% for product in stats.top_products %}
+            <li class="list-group-item">
+                <a href="{% url 'products:product_detail' product.pk %}">{{ product.name }}</a>
+                <span class="badge bg-secondary float-end">Requests: {{ product.request_count }}</span>
+            </li>
+        {% empty %}
+            <li class="list-group-item">No product metrics available yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

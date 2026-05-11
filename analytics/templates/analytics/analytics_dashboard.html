@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Analytics Dashboard</h1>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Total Products</h5>
+            <p class="display-6">{{ total_products }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Available Products</h5>
+            <p class="display-6">{{ available_products }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Sold Products</h5>
+            <p class="display-6">{{ sold_products }}</p>
+        </div>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Total Requests</h5>
+            <p class="display-6">{{ total_requests }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Completed Requests</h5>
+            <p class="display-6">{{ completed_requests }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3">
+            <h5>Pending Requests</h5>
+            <p class="display-6">{{ pending_requests }}</p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card p-3">
+            <h3>Popular Searches</h3>
+            <ul class="list-group list-group-flush">
+                {% for item in popular_searches %}
+                    <li class="list-group-item">{{ item.query }} <span class="badge bg-secondary float-end">{{ item.count }}</span></li>
+                {% empty %}
+                    <li class="list-group-item">No search data yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card p-3">
+            <h3>Trending Categories</h3>
+            <ul class="list-group list-group-flush">
+                {% for item in trending_categories %}
+                    <li class="list-group-item">{{ item.category_filter }} <span class="badge bg-secondary float-end">{{ item.count }}</span></li>
+                {% empty %}
+                    <li class="list-group-item">No category trends yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card p-3">
+            <h3>Popular Products</h3>
+            <ul class="list-group list-group-flush">
+                {% for product in popular_products %}
+                    <li class="list-group-item">
+                        <a href="{% url 'products:product_detail' product.pk %}">{{ product.name }}</a>
+                        <span class="badge bg-secondary float-end">Views: {{ product.view_count }} | Requests: {{ product.request_count }}</span>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No popular products data yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

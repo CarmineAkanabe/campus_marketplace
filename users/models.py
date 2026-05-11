@@ -31,3 +31,7 @@ class User(AbstractUser):
         from django.db.models import Avg
 
         return self.reviews_received.aggregate(avg=Avg('rating'))['avg'] or 0
+
+    @property
+    def unread_notifications_count(self):
+        return self.notifications.filter(is_read=False).count()

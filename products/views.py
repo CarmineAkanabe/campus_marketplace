@@ -7,12 +7,18 @@ from .models import Product
 
 
 def product_list(request):
+    from analytics.views import track_search
+    
     products = Product.objects.filter(availability_status=Product.AVAILABILITY_AVAILABLE).order_by('-created_at')
     q = request.GET.get('q', '').strip()
     category = request.GET.get('category', '').strip()
     min_price = request.GET.get('min_price', '').strip()
     max_price = request.GET.get('max_price', '').strip()
     condition = request.GET.get('condition', '').strip()
+
+    # Track search query for analytics
+    if q or category:
+        track_search(request.user, q or category, category)
 
     if q:
         products = products.filter(name__icontains=q) | products.filter(description__icontains=q)
@@ -44,13 +50,27 @@ def product_list(request):
 
 
 def product_detail(request, pk):
+    from recommendations.views import track_product_view, get_recommendations_for_user
+    
     product = get_object_or_404(Product, pk=pk)
+    
+    # Track view for recommendations
+    track_product_view(request.user, product)
+    
     can_request = request.user.is_authenticated and getattr(request.user, 'role', None) == 'buyer'
     can_edit = request.user.is_authenticated and request.user == product.seller
+    
+    # Get similar product recommendations
+    similar_products = Product.objects.filter(
+        category=product.category,
+        availability_status=Product.AVAILABILITY_AVAILABLE
+    ).exclude(id=product.id)[:4]
+    
     return render(request, 'products/product_detail.html', {
         'product': product,
         'can_request': can_request,
         'can_edit': can_edit,
+        'similar_products': similar_products,
     })
 
 

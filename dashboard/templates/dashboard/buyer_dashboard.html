@@ -34,4 +34,32 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card p-3">
+            <h3>Recommended Products</h3>
+            <div class="row">
+                {% for product in recommendations %}
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.category }}</p>
+                                <p class="card-text text-muted">${{ product.price }}</p>
+                                <a href="{% url 'products:product_detail' product.pk %}" class="btn btn-sm btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-info">No recommendations available yet.</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

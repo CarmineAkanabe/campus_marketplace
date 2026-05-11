@@ -14,12 +14,13 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'products:product_list' %}">Products</a></li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'notifications:notification_list' %}">Notifications{% with user.notifications.filter(is_read=False).count as unread_count %}{% if unread_count > 0 %} <span class="badge bg-danger">{{ unread_count }}</span>{% endif %}{% endwith %}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'notifications:notification_list' %}">Notifications{% if user.unread_notifications_count > 0 %} <span class="badge bg-danger">{{ user.unread_notifications_count }}</span>{% endif %}</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:buyer_dashboard' %}">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'requestsystem:request_list' %}">My Requests</a></li>
                     {% if user.role == 'seller' %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'requestsystem:seller_request_list' %}">Incoming Requests</a></li>
                     {% endif %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'recommendations:recommendations_list' %}">Recommendations</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'reviews:review_list' %}">My Reviews</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:logout' %}">Logout</a></li>

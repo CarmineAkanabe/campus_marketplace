@@ -198,6 +198,20 @@ Displays:
 - Product performance
 - Notifications
 
+## Setup
+
+1. Create and activate a virtual environment.
+2. Install dependencies from `requirements.txt`.
+3. Run `python manage.py makemigrations` and `python manage.py migrate`.
+4. Create a superuser with `python manage.py createsuperuser`.
+5. Start the development server with `python manage.py runserver`.
+
+## Notes
+
+- `config/settings.py` uses SQLite by default for local development.
+- `AUTH_USER_MODEL = 'users.User'` enables custom buyer/seller roles.
+- Phase 6 includes unit tests for models and views as well as improved documentation.
+
 ---
 
 # Optional Online Features

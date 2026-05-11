@@ -10,11 +10,16 @@ def buyer_dashboard(request):
     if getattr(request.user, 'role', None) == 'seller':
         return redirect('dashboard:seller_dashboard')
 
+    from recommendations.views import get_recommendations_for_user
+    
     recent_requests = PurchaseRequest.objects.filter(buyer=request.user).order_by('-created_at')[:5]
     notifications = request.user.notifications.order_by('-created_at')[:5]
+    recommendations = get_recommendations_for_user(request.user, limit=4)
+    
     return render(request, 'dashboard/buyer_dashboard.html', {
         'recent_requests': recent_requests,
         'notifications': notifications,
+        'recommendations': recommendations,
     })
 
 

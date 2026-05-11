@@ -12,7 +12,7 @@
 {% if product.image %}
     <img src="{{ product.image.url }}" class="img-fluid mb-3" alt="{{ product.name }}">
 {% endif %}
-<div class="d-flex gap-2">
+<div class="d-flex gap-2 mb-4">
     {% if can_request %}
         <a class="btn btn-primary" href="{% url 'requestsystem:request_create' product.pk %}">Send request</a>
     {% endif %}
@@ -21,4 +21,25 @@
         <a class="btn btn-danger" href="{% url 'products:product_delete' product.pk %}">Delete</a>
     {% endif %}
 </div>
+{% if similar_products %}
+    <div class="card p-3">
+        <h3>Similar Products</h3>
+        <div class="row">
+            {% for similar in similar_products %}
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100">
+                        {% if similar.image %}
+                            <img src="{{ similar.image.url }}" class="card-img-top" alt="{{ similar.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ similar.name }}</h5>
+                            <p class="card-text">${{ similar.price }}</p>
+                            <a href="{% url 'products:product_detail' similar.pk %}" class="btn btn-sm btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
