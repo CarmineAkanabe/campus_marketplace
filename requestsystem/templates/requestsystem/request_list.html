@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>My Requests</h1>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in requests %}
+            <tr>
+                <td>{{ request.product.name }}</td>
+                <td>{{ request.status|capfirst }}</td>
+                <td>{{ request.message }}</td>
+                <td>{{ request.created_at|date:'M d, Y' }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="4">No requests found.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

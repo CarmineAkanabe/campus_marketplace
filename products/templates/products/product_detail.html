@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+<p><strong>Category:</strong> {{ product.category }}</p>
+<p><strong>Price:</strong> {{ product.price }}</p>
+<p><strong>Condition:</strong> {{ product.condition|capfirst }}</p>
+<p><strong>Status:</strong> {{ product.availability_status|capfirst }}</p>
+<p>{{ product.description }}</p>
+{% if product.image %}
+    <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+{% endif %}
+{% if can_request %}
+    <a class="btn btn-primary mt-3" href="{% url 'requestsystem:request_create' product.pk %}">Send request</a>
+{% endif %}
+{% endblock %}

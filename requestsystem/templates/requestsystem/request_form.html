@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Send Request</h1>
+<p>Product: <strong>{{ product.name }}</strong></p>
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="message" class="form-label">Request message</label>
+        <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Send request</button>
+</form>
+{% endblock %}
