@@ -48,7 +48,7 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <p class="card-text">{{ product.category }}</p>
-                                <p class="card-text text-muted">${{ product.price }}</p>
+                                <p class="card-text text-muted">FCFA{{ product.price }}</p>
                                 <a href="{% url 'products:product_detail' product.pk %}" class="btn btn-sm btn-primary">View</a>
                             </div>
                         </div>

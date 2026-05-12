@@ -30,7 +30,6 @@ urlpatterns = [
     path('reviews/', include('reviews.urls')),
     path('recommendations/', include('recommendations.urls')),
     path('analytics/', include('analytics.urls')),
-    path('scraper/', include('scraper.urls')),
 ]
 
 if settings.DEBUG:

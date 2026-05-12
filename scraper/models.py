@@ -21,7 +21,7 @@ class ScrapedPrice(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.source_name} - {self.product.name}: ${self.price}"
+        return f"{self.source_name} - {self.product.name}: FCFA {self.price}"
 
     def price_difference(self):
         """Calculate difference between this scraped price and our price."""

@@ -1,6 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from products.models import Product
 from .models import ProductView
@@ -84,6 +85,10 @@ def get_recommendations_for_user(user, limit=8):
 @login_required
 def recommendations_list(request):
     """Display personalized recommendations for the user."""
+    if getattr(request.user, 'role', None) == 'seller':
+        messages.error(request, 'Recommendations are for buyers only.')
+        return redirect('dashboard:seller_dashboard')
+    
     recommendations = get_recommendations_for_user(request.user, limit=16)
     return render(request, 'recommendations/recommendations_list.html', {
         'recommendations': recommendations,

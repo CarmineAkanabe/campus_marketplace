@@ -10,7 +10,7 @@
             <label for="product_id" class="form-label">Product</label>
             <select id="product_id" name="product_id" class="form-select">
                 {% for product in products %}
-                    <option value="{{ product.pk }}">{{ product.name }} - ${{ product.price }}</option>
+                    <option value="{{ product.pk }}">{{ product.name }} - FCFA{{ product.price }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -23,7 +23,7 @@
         <ul class="list-group list-group-flush">
             {% for item in scraped_data %}
                 <li class="list-group-item">
-                    <strong>{{ item.source_name }}</strong>: ${{ item.price }}
+                    <strong>{{ item.source_name }}</strong>: FCFA {{ item.price }}
                     <br>
                     <a href="{{ item.source_url }}" target="_blank">Source</a>
                 </li>

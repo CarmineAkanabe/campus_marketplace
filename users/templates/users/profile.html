@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Profile</h1>
-<div class="card">
+<div class="card mb-3">
     <div class="card-body">
         <h5 class="card-title">{{ user.username }}</h5>
         <p><strong>Role:</strong> {{ user.role|capfirst }}</p>
@@ -10,6 +10,11 @@
         <p><strong>Name:</strong> {{ user.full_name }}</p>
         <p><strong>Phone:</strong> {{ user.phone }}</p>
         <p><strong>Location:</strong> {{ user.location }}</p>
+        {% if user.profile_image %}
+            <img src="{{ user.profile_image.url }}" alt="Profile" class="img-fluid mt-3" style="max-width: 200px;">
+        {% endif %}
     </div>
 </div>
+<a href="{% url 'users:profile_edit' %}" class="btn btn-primary">Edit Profile</a>
+<a href="{% url 'core:home' %}" class="btn btn-secondary">Back to Home</a>
 {% endblock %}

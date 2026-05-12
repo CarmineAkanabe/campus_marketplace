@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ product.name }}</h1>
 <p><strong>Category:</strong> {{ product.category }}</p>
-<p><strong>Price:</strong> {{ product.price }}</p>
+<p><strong>Price:</strong> FCFA {{ product.price }}</p>
 <p><strong>Condition:</strong> {{ product.condition|capfirst }}</p>
 <p><strong>Status:</strong> {{ product.availability_status|capfirst }}</p>
 <p><strong>Seller:</strong> {{ product.seller.username }}</p>
@@ -33,7 +33,7 @@
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ similar.name }}</h5>
-                            <p class="card-text">${{ similar.price }}</p>
+                            <p class="card-text">FCFA {{ similar.price }}</p>
                             <a href="{% url 'products:product_detail' similar.pk %}" class="btn btn-sm btn-primary">View</a>
                         </div>
                     </div>
