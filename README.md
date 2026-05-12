@@ -1,6 +1,6 @@
-# Campus Marketplace
+# CampusMart
 
-Campus Marketplace is a Django web application for students and small campus vendors. Buyers can browse products, search listings, send purchase requests, review sellers, and receive notifications. Sellers can create products, manage inventory, respond to requests, and view dashboard/analytics summaries.
+CampusMart is a Django web application for students and small campus vendors. Buyers can browse products, search listings, send purchase requests, review sellers, and receive notifications. Sellers can create products, manage inventory, respond to requests, and view dashboard/analytics summaries.
 
 The project is intentionally simple enough to explain in an academic defense while still showing a clean modular Django structure.
 
@@ -95,6 +95,13 @@ After running `seed_demo_data`, these local accounts are available:
 
 - Seller: `demo_seller` / `demo12345`
 - Buyer: `demo_buyer` / `demo12345`
+
+## Contributors
+
+| Name | Role | GitHub |
+| --- | --- | --- |
+| Abanda Ambrouise | Product Owner | https://github.com/AmbroiseAB |
+| Serge | Backend & Platform | https://github.com/CarmineAkanabe |
 
 ## Environment
 

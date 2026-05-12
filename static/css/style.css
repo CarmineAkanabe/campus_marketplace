@@ -53,6 +53,48 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 800;
 }
 
+.logo-brand {
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+}
+
+.logo-brand img {
+    width: 174px;
+    height: 42px;
+    object-fit: contain;
+}
+
+.navbar-avatar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #ffffff;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.navbar-avatar-link:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.navbar-avatar {
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.72);
+    border-radius: 999px;
+    background: #edf4f1;
+}
+
+.navbar-user-label {
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .navbar-nav .nav-link {
     color: rgba(255, 255, 255, 0.86) !important;
     font-weight: 600;
@@ -60,6 +102,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-nav .nav-link:hover {
     color: #ffffff !important;
+}
+
+.dropdown-menu {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.dropdown-item {
+    font-weight: 600;
+}
+
+.dropdown-item:active {
+    background: var(--primary);
 }
 
 .badge {
@@ -429,6 +485,10 @@ h1, h2, h3, h4, h5, h6 {
     .section-heading {
         align-items: flex-start;
         flex-direction: column;
+    }
+
+    .navbar-user-label {
+        display: none;
     }
 }
 

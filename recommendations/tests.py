@@ -37,3 +37,10 @@ class RecommendationTests(TestCase):
         track_product_view(self.user, self.viewed_product)
         recommendations = get_recommendations_for_user(self.user, limit=2)
         self.assertIn(self.recommendation_product, recommendations)
+
+    def test_recommendations_do_not_repeat_products(self):
+        track_product_view(self.user, self.viewed_product)
+        recommendations = get_recommendations_for_user(self.user, limit=4)
+        recommendation_ids = [product.pk for product in recommendations]
+
+        self.assertEqual(len(recommendation_ids), len(set(recommendation_ids)))

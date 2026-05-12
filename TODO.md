@@ -1,4 +1,4 @@
-# Campus Marketplace Project Plan
+# CampusMart Project Plan
 
 ## Completed
 

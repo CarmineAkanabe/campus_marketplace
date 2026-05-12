@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 52" role="img" aria-labelledby="title desc">
+  <title id="title">CampusMart logo</title>
+  <desc id="desc">A simple campus marketplace logo with a storefront and graduation cap.</desc>
+  <rect width="220" height="52" rx="10" fill="#16251f"/>
+  <g transform="translate(14 10)">
+    <path d="M4 14h28l-3-8H7z" fill="#f6c56b"/>
+    <path d="M7 14v18h22V14" fill="#176b5b"/>
+    <path d="M11 32V20h14v12" fill="#f8fafc"/>
+    <path d="M1 10 18 2l17 8-17 8z" fill="#f8fafc"/>
+    <path d="M29 12v8" stroke="#f6c56b" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <text x="56" y="32" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="800">CampusMart</text>
+</svg>

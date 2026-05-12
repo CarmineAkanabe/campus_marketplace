@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Q
+from django.db.models import Count
 from django.shortcuts import render, redirect
 
 from products.models import Product
@@ -31,15 +31,32 @@ def get_category_recommendations(user, limit=8):
     return recommended
 
 
-def get_popular_recommendations(limit=8):
+def get_popular_recommendations(limit=8, excluded_ids=None):
     """Get products with the most views."""
     popular = Product.objects.filter(
         availability_status=Product.AVAILABILITY_AVAILABLE
     ).annotate(
         view_count=Count('views')
-    ).order_by('-view_count', '-created_at')[:limit]
+    )
+    if excluded_ids:
+        popular = popular.exclude(id__in=excluded_ids)
+    popular = popular.order_by('-view_count', '-created_at')[:limit]
 
     return popular
+
+
+def unique_products(products, limit):
+    """Return products once, preserving recommendation order."""
+    seen = set()
+    unique = []
+    for product in products:
+        if product.pk in seen:
+            continue
+        seen.add(product.pk)
+        unique.append(product)
+        if len(unique) >= limit:
+            break
+    return unique
 
 
 def get_seller_recommendations(user, limit=8):
@@ -65,21 +82,16 @@ def get_recommendations_for_user(user, limit=8):
     if not user.is_authenticated:
         return get_popular_recommendations(limit)
 
-    # Try category-based first
-    category_recs = get_category_recommendations(user, limit)
-    if category_recs.count() >= limit:
-        return category_recs
+    category_recs = list(get_category_recommendations(user, limit))
+    seller_recs = list(get_seller_recommendations(user, limit))
+    selected = unique_products(category_recs + seller_recs, limit)
 
-    # Combine category and seller recommendations
-    seller_recs = get_seller_recommendations(user, limit - category_recs.count())
-    all_recs = list(category_recs) + list(seller_recs)
+    if len(selected) < limit:
+        excluded_ids = [product.pk for product in selected]
+        popular_recs = get_popular_recommendations(limit * 2, excluded_ids=excluded_ids)
+        selected = unique_products(selected + list(popular_recs), limit)
 
-    # Fill remaining with popular products
-    if len(all_recs) < limit:
-        popular_recs = get_popular_recommendations(limit - len(all_recs))
-        all_recs.extend(popular_recs)
-
-    return all_recs[:limit]
+    return selected
 
 
 @login_required

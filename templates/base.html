@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Marketplace</title>
+    <title>CampusMart</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -12,32 +12,48 @@
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
     <div class="container">
         {% if user.is_authenticated %}
-            <a class="navbar-brand" href="{% url 'dashboard:buyer_dashboard' %}">Campus Marketplace</a>
+            <a class="navbar-avatar-link" href="{% url 'dashboard:buyer_dashboard' %}" aria-label="Open dashboard">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" class="navbar-avatar" alt="{{ user.username }}">
+                {% else %}
+                    <img src="{% static 'img/account-default.svg' %}" class="navbar-avatar" alt="{{ user.username }}">
+                {% endif %}
+                <span class="navbar-user-label">{{ user.username }}</span>
+            </a>
         {% else %}
-            <a class="navbar-brand" href="{% url 'core:home' %}">Campus Marketplace</a>
+            <a class="navbar-brand logo-brand" href="{% url 'core:home' %}" aria-label="CampusMart home">
+                <img src="{% static 'img/campusmart-logo.svg' %}" alt="CampusMart">
+            </a>
         {% endif %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'products:product_list' %}">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
                 {% if user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'notifications:notification_list' %}">Notifications{% if user.unread_notifications_count > 0 %} <span class="badge bg-danger">{{ user.unread_notifications_count }}</span>{% endif %}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:buyer_dashboard' %}">Dashboard</a></li>
-                    {% if user.role == 'buyer' %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'requestsystem:request_list' %}">My Requests</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'recommendations:recommendations_list' %}">Recommendations</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'reviews:review_list' %}">My Reviews</a></li>
-                    {% endif %}
-                    {% if user.role == 'seller' %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'requestsystem:seller_request_list' %}">Incoming Requests</a></li>
-                    {% endif %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'users:logout' %}">Logout</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                            <li><a class="dropdown-item" href="{% url 'dashboard:buyer_dashboard' %}">Dashboard</a></li>
+                            {% if user.role == 'buyer' %}
+                                <li><a class="dropdown-item" href="{% url 'requestsystem:request_list' %}">My Requests</a></li>
+                                <li><a class="dropdown-item" href="{% url 'recommendations:recommendations_list' %}">Recommendations</a></li>
+                                <li><a class="dropdown-item" href="{% url 'reviews:review_list' %}">My Reviews</a></li>
+                            {% endif %}
+                            {% if user.role == 'seller' %}
+                                <li><a class="dropdown-item" href="{% url 'requestsystem:seller_request_list' %}">Incoming Requests</a></li>
+                                <li><a class="dropdown-item" href="{% url 'products:product_create' %}">Create Product</a></li>
+                            {% endif %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
                 {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">Register</a></li>
                 {% endif %}
@@ -59,7 +75,7 @@
     <div class="container">
         <div class="row g-4 align-items-start">
             <div class="col-md-5">
-                <h5>Campus Marketplace</h5>
+                <h5>CampusMart</h5>
                 <p class="mb-0">A simple campus buying and selling platform for students and small vendors.</p>
             </div>
             <div class="col-md-3">

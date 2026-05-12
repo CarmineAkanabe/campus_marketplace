@@ -1,8 +1,8 @@
-# Campus Marketplace Documentation
+# CampusMart Documentation
 
 ## Overview
 
-Campus Marketplace is a modular Django application for campus buying and selling. It supports two main user roles:
+CampusMart is a modular Django application for campus buying and selling. It supports two main user roles:
 
 - Buyers browse products, send purchase requests, review sellers, view recommendations, and receive notifications.
 - Sellers create products, manage listings, respond to requests, receive notifications, and view dashboard/analytics summaries.
