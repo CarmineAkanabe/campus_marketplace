@@ -7,7 +7,7 @@ from django.urls import reverse
 from unittest.mock import Mock, patch
 import requests
 
-from core.services import convert_xaf_price
+from core.services import convert_xaf_price, search_product_image
 from products.models import Product
 
 User = get_user_model()
@@ -75,6 +75,36 @@ class CurrencyServiceTests(TestCase):
         mock_get.side_effect = requests.RequestException('network down')
 
         self.assertEqual(convert_xaf_price('10000.00'), {})
+
+
+class ProductMediaServiceTests(TestCase):
+    def setUp(self):
+        cache.clear()
+
+    @patch('core.services.requests.get')
+    def test_search_product_image_uses_keywords(self, mock_get):
+        response = Mock()
+        response.json.return_value = {
+            'results': [
+                {'thumbnail': 'https://example.com/calculator.jpg'},
+            ]
+        }
+        response.raise_for_status.return_value = None
+        mock_get.return_value = response
+
+        image_url = search_product_image('Scientific Calculator', 'School Supplies')
+
+        self.assertEqual(image_url, 'https://example.com/calculator.jpg')
+        called_params = mock_get.call_args.kwargs['params']
+        self.assertEqual(called_params['q'], 'Scientific Calculator School Supplies')
+
+    @patch('core.services.requests.get')
+    def test_search_product_image_falls_back(self, mock_get):
+        mock_get.side_effect = requests.RequestException('network down')
+
+        image_url = search_product_image('Study Desk Lamp', 'Room Essentials')
+
+        self.assertIn('images.unsplash.com', image_url)
 
 
 class ProjectCleanupTests(TestCase):

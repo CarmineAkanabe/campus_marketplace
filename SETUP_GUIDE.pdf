@@ -1,0 +1,347 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+4 0 obj
+<< /Length 2610 >>
+stream
+BT
+/F2 20 Tf
+50 792 Td (CampusMart Setup Guide) Tj
+-50 -792 Td
+/F1 11 Tf
+50 769 Td () Tj
+-50 -769 Td
+/F1 11 Tf
+50 754 Td (This guide explains how to clone, install, seed, test, and run CampusMart on a new PC.) Tj
+-50 -754 Td
+/F1 11 Tf
+50 739 Td () Tj
+-50 -739 Td
+/F2 15 Tf
+50 724 Td (1. Requirements) Tj
+-50 -724 Td
+/F1 11 Tf
+50 701 Td () Tj
+-50 -701 Td
+/F1 11 Tf
+50 686 Td (- Python 3.12 or newer recommended) Tj
+-50 -686 Td
+/F1 11 Tf
+50 671 Td (- Git) Tj
+-50 -671 Td
+/F1 11 Tf
+50 656 Td (- Windows PowerShell or a terminal) Tj
+-50 -656 Td
+/F1 11 Tf
+50 641 Td (- Internet connection for dependency installation and optional online features) Tj
+-50 -641 Td
+/F1 11 Tf
+50 626 Td () Tj
+-50 -626 Td
+/F2 15 Tf
+50 611 Td (2. Clone the Repository) Tj
+-50 -611 Td
+/F1 11 Tf
+50 588 Td () Tj
+-50 -588 Td
+/F3 10 Tf
+50 573 Td (git clone <repository-url>) Tj
+-50 -573 Td
+/F3 10 Tf
+50 558 Td (cd campus_marketplace) Tj
+-50 -558 Td
+/F1 11 Tf
+50 543 Td () Tj
+-50 -543 Td
+/F1 11 Tf
+50 528 Td (Replace `<repository-url>` with the real GitHub repository URL.) Tj
+-50 -528 Td
+/F1 11 Tf
+50 513 Td () Tj
+-50 -513 Td
+/F2 15 Tf
+50 498 Td (3. Create a Virtual Environment) Tj
+-50 -498 Td
+/F1 11 Tf
+50 475 Td () Tj
+-50 -475 Td
+/F3 10 Tf
+50 460 Td (python -m venv .venv) Tj
+-50 -460 Td
+/F1 11 Tf
+50 445 Td () Tj
+-50 -445 Td
+/F1 11 Tf
+50 430 Td (Activate it:) Tj
+-50 -430 Td
+/F1 11 Tf
+50 415 Td () Tj
+-50 -415 Td
+/F3 10 Tf
+50 400 Td (.venv\\Scripts\\activate) Tj
+-50 -400 Td
+/F1 11 Tf
+50 385 Td () Tj
+-50 -385 Td
+/F1 11 Tf
+50 370 Td (If PowerShell blocks activation, run:) Tj
+-50 -370 Td
+/F1 11 Tf
+50 355 Td () Tj
+-50 -355 Td
+/F3 10 Tf
+50 340 Td (Set-ExecutionPolicy -Scope CurrentUser RemoteSigned) Tj
+-50 -340 Td
+/F1 11 Tf
+50 325 Td () Tj
+-50 -325 Td
+/F1 11 Tf
+50 310 Td (Then activate again.) Tj
+-50 -310 Td
+/F1 11 Tf
+50 295 Td () Tj
+-50 -295 Td
+/F2 15 Tf
+50 280 Td (4. Install Dependencies) Tj
+-50 -280 Td
+/F1 11 Tf
+50 257 Td () Tj
+-50 -257 Td
+/F3 10 Tf
+50 242 Td (pip install -r requirements.txt) Tj
+-50 -242 Td
+/F1 11 Tf
+50 227 Td () Tj
+-50 -227 Td
+/F2 15 Tf
+50 212 Td (5. Environment File) Tj
+-50 -212 Td
+/F1 11 Tf
+50 189 Td () Tj
+-50 -189 Td
+/F1 11 Tf
+50 174 Td (The project can run without a `.env` file because it has a local demo fallback key.) Tj
+-50 -174 Td
+/F1 11 Tf
+50 159 Td () Tj
+-50 -159 Td
+/F1 11 Tf
+50 144 Td (For a cleaner setup, create `.env` in the project root:) Tj
+-50 -144 Td
+/F1 11 Tf
+50 129 Td () Tj
+-50 -129 Td
+/F3 10 Tf
+50 114 Td (SECRET_KEY=replace-this-with-any-long-random-string-for-local-testing) Tj
+-50 -114 Td
+/F1 11 Tf
+50 99 Td () Tj
+-50 -99 Td
+/F2 15 Tf
+50 84 Td (6. Database Setup) Tj
+-50 -84 Td
+ET
+endstream
+endobj
+5 0 obj
+<< /Length 2498 >>
+stream
+BT
+/F1 11 Tf
+50 792 Td () Tj
+-50 -792 Td
+/F1 11 Tf
+50 777 Td (Run migrations:) Tj
+-50 -777 Td
+/F1 11 Tf
+50 762 Td () Tj
+-50 -762 Td
+/F3 10 Tf
+50 747 Td (python manage.py migrate) Tj
+-50 -747 Td
+/F1 11 Tf
+50 732 Td () Tj
+-50 -732 Td
+/F2 15 Tf
+50 717 Td (7. Seed Demo Data) Tj
+-50 -717 Td
+/F1 11 Tf
+50 694 Td () Tj
+-50 -694 Td
+/F1 11 Tf
+50 679 Td (CampusMart includes a Django seeder-like command:) Tj
+-50 -679 Td
+/F1 11 Tf
+50 664 Td () Tj
+-50 -664 Td
+/F3 10 Tf
+50 649 Td (python manage.py seed_demo_data) Tj
+-50 -649 Td
+/F1 11 Tf
+50 634 Td () Tj
+-50 -634 Td
+/F1 11 Tf
+50 619 Td (It creates demo users and sample products. It is safe to run more than once.) Tj
+-50 -619 Td
+/F1 11 Tf
+50 604 Td () Tj
+-50 -604 Td
+/F1 11 Tf
+50 589 Td (Demo accounts:) Tj
+-50 -589 Td
+/F1 11 Tf
+50 574 Td () Tj
+-50 -574 Td
+/F3 10 Tf
+50 559 Td (Seller: demo_seller / demo12345) Tj
+-50 -559 Td
+/F3 10 Tf
+50 544 Td (Buyer:  demo_buyer  / demo12345) Tj
+-50 -544 Td
+/F1 11 Tf
+50 529 Td () Tj
+-50 -529 Td
+/F2 15 Tf
+50 514 Td (8. Run Tests) Tj
+-50 -514 Td
+/F1 11 Tf
+50 491 Td () Tj
+-50 -491 Td
+/F3 10 Tf
+50 476 Td (python manage.py test) Tj
+-50 -476 Td
+/F1 11 Tf
+50 461 Td () Tj
+-50 -461 Td
+/F1 11 Tf
+50 446 Td (All tests should pass before demoing the app.) Tj
+-50 -446 Td
+/F1 11 Tf
+50 431 Td () Tj
+-50 -431 Td
+/F2 15 Tf
+50 416 Td (9. Start the Server) Tj
+-50 -416 Td
+/F1 11 Tf
+50 393 Td () Tj
+-50 -393 Td
+/F3 10 Tf
+50 378 Td (python manage.py runserver) Tj
+-50 -378 Td
+/F1 11 Tf
+50 363 Td () Tj
+-50 -363 Td
+/F1 11 Tf
+50 348 Td (Open:) Tj
+-50 -348 Td
+/F1 11 Tf
+50 333 Td () Tj
+-50 -333 Td
+/F3 10 Tf
+50 318 Td (http://127.0.0.1:8000/) Tj
+-50 -318 Td
+/F1 11 Tf
+50 303 Td () Tj
+-50 -303 Td
+/F2 15 Tf
+50 288 Td (10. Common Issues) Tj
+-50 -288 Td
+/F1 11 Tf
+50 265 Td () Tj
+-50 -265 Td
+/F1 11 Tf
+50 250 Td (If `python` does not work, try:) Tj
+-50 -250 Td
+/F1 11 Tf
+50 235 Td () Tj
+-50 -235 Td
+/F3 10 Tf
+50 220 Td (py manage.py runserver) Tj
+-50 -220 Td
+/F1 11 Tf
+50 205 Td () Tj
+-50 -205 Td
+/F1 11 Tf
+50 190 Td (If dependencies are missing, make sure the virtual environment is activated and run:) Tj
+-50 -190 Td
+/F1 11 Tf
+50 175 Td () Tj
+-50 -175 Td
+/F3 10 Tf
+50 160 Td (pip install -r requirements.txt) Tj
+-50 -160 Td
+/F1 11 Tf
+50 145 Td () Tj
+-50 -145 Td
+/F1 11 Tf
+50 130 Td (If the database looks empty, run:) Tj
+-50 -130 Td
+/F1 11 Tf
+50 115 Td () Tj
+-50 -115 Td
+/F3 10 Tf
+50 100 Td (python manage.py migrate) Tj
+-50 -100 Td
+/F3 10 Tf
+50 85 Td (python manage.py seed_demo_data) Tj
+-50 -85 Td
+/F1 11 Tf
+50 70 Td () Tj
+-50 -70 Td
+ET
+endstream
+endobj
+6 0 obj
+<< /Length 196 >>
+stream
+BT
+/F1 11 Tf
+50 792 Td (If online images or converted prices do not appear, check the internet connection. The) Tj
+-50 -792 Td
+/F1 11 Tf
+50 777 Td (app still works without them.) Tj
+-50 -777 Td
+ET
+endstream
+endobj
+7 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 4 0 R >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 5 0 R >>
+endobj
+9 0 obj
+<< /Type /Page /Parent 10 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 1 0 R /F2 2 0 R /F3 3 0 R >> >> /Contents 6 0 R >>
+endobj
+10 0 obj
+<< /Type /Pages /Kids [7 0 R 8 0 R 9 0 R] /Count 3 >>
+endobj
+11 0 obj
+<< /Type /Catalog /Pages 10 0 R >>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000000154 00000 n 
+0000000222 00000 n 
+0000002884 00000 n 
+0000005434 00000 n 
+0000005681 00000 n 
+0000005828 00000 n 
+0000005975 00000 n 
+0000006122 00000 n 
+0000006192 00000 n 
+trailer
+<< /Size 12 /Root 11 0 R >>
+startxref
+6243
+%%EOF

@@ -68,6 +68,8 @@ analytics         Search and product performance analytics
 
 Product prices remain stored in FCFA. A small service in `core.services` converts FCFA to EUR using the fixed peg, calls Frankfurter's public exchange-rate API for EUR to USD, and caches the derived rates for one day. Templates use a custom tag to show approximate converted prices.
 
+Products without uploaded images use a keyword-based online image search through a template tag in `core.templatetags.product_media`. The helper searches Openverse with the product name and category, caches the result, and falls back to a category image if the request fails. Uploaded seller images always take priority.
+
 If the external API fails or does not return the expected rates, pages continue to render normally and only show FCFA prices.
 
 ## Demo Data

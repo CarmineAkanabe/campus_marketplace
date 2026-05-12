@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load currency %}
+{% load product_media %}
 
 {% block content %}
 <div class="page-header compact">
@@ -51,7 +52,8 @@
                 {% if product.image %}
                     <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                 {% else %}
-                    <div class="product-image-placeholder">{{ product.category|slice:":1" }}</div>
+                    {% product_placeholder_image product as placeholder_image %}
+                    <img src="{{ placeholder_image }}" class="card-img-top online-product-image" alt="{{ product.category }} product image" loading="lazy">
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title"><a href="{% url 'products:product_detail' product.pk %}">{{ product.name }}</a></h5>

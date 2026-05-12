@@ -275,6 +275,10 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: cover;
 }
 
+.online-product-image {
+    background: #edf4f1;
+}
+
 .product-image-placeholder {
     display: grid;
     place-items: center;

@@ -13,6 +13,7 @@
 - Search/product analytics
 - About page and footer
 - Simple currency conversion online feature
+- Keyword-based online image search for products without uploaded photos
 - Demo seed command
 - Cleaner Bootstrap-based styling
 

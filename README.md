@@ -15,6 +15,7 @@ The project is intentionally simple enough to explain in an academic defense whi
 - Product recommendations based on recent product views
 - Basic analytics for searches, products, and seller performance
 - Optional online currency conversion for FCFA prices
+- Optional online media search for products without uploaded images
 
 ## Optional Online Feature
 
@@ -27,6 +28,12 @@ The app uses the public Frankfurter exchange-rate API:
 - No API key required
 
 If the API is unavailable, the app simply shows FCFA prices only.
+
+## Online Media Enhancement
+
+When a seller does not upload a product image, CampusMart searches Openverse using the product name and category, then shows a relevant online image. Results are cached so repeated page loads stay fast.
+
+If image search is unavailable, the app falls back to a simple category image.
 
 ## Tech Stack
 
