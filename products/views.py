@@ -51,6 +51,8 @@ def product_list(request):
 
 def product_detail(request, pk):
     from recommendations.views import track_product_view, get_recommendations_for_user
+    from requestsystem.models import PurchaseRequest
+    from reviews.models import Review
     
     product = get_object_or_404(Product, pk=pk)
     
@@ -59,6 +61,22 @@ def product_detail(request, pk):
     
     can_request = request.user.is_authenticated and getattr(request.user, 'role', None) == 'buyer'
     can_edit = request.user.is_authenticated and request.user == product.seller
+    review_request = None
+
+    if can_request:
+        has_reviewed_seller = Review.objects.filter(
+            buyer=request.user,
+            seller=product.seller,
+        ).exists()
+        if not has_reviewed_seller:
+            review_request = PurchaseRequest.objects.filter(
+                buyer=request.user,
+                product=product,
+                status__in=[
+                    PurchaseRequest.STATUS_ACCEPTED,
+                    PurchaseRequest.STATUS_COMPLETED,
+                ],
+            ).order_by('-updated_at').first()
     
     # Get similar product recommendations
     similar_products = Product.objects.filter(
@@ -70,6 +88,7 @@ def product_detail(request, pk):
         'product': product,
         'can_request': can_request,
         'can_edit': can_edit,
+        'review_request': review_request,
         'similar_products': similar_products,
     })
 

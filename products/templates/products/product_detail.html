@@ -33,6 +33,9 @@
             {% if can_request %}
                 <a class="btn btn-primary" href="{% url 'requestsystem:request_create' product.pk %}">Send request</a>
             {% endif %}
+            {% if review_request %}
+                <a class="btn btn-success" href="{% url 'reviews:review_create' review_request.pk %}">Leave seller review</a>
+            {% endif %}
             {% if can_edit %}
                 <a class="btn btn-secondary" href="{% url 'products:product_update' product.pk %}">Edit</a>
                 <a class="btn btn-danger" href="{% url 'products:product_delete' product.pk %}">Delete</a>
