@@ -1,45 +1,70 @@
 {% extends 'base.html' %}
+{% load currency %}
 
 {% block content %}
-<h1>{{ product.name }}</h1>
-<p><strong>Category:</strong> {{ product.category }}</p>
-<p><strong>Price:</strong> FCFA {{ product.price }}</p>
-<p><strong>Condition:</strong> {{ product.condition|capfirst }}</p>
-<p><strong>Status:</strong> {{ product.availability_status|capfirst }}</p>
-<p><strong>Seller:</strong> {{ product.seller.username }}</p>
-<p><strong>Seller rating:</strong> {{ product.seller.average_rating|floatformat:1 }}/5</p>
-<p>{{ product.description }}</p>
-{% if product.image %}
-    <img src="{{ product.image.url }}" class="img-fluid mb-3" alt="{{ product.name }}">
-{% endif %}
-<div class="d-flex gap-2 mb-4">
-    {% if can_request %}
-        <a class="btn btn-primary" href="{% url 'requestsystem:request_create' product.pk %}">Send request</a>
-    {% endif %}
-    {% if can_edit %}
-        <a class="btn btn-secondary" href="{% url 'products:product_update' product.pk %}">Edit</a>
-        <a class="btn btn-danger" href="{% url 'products:product_delete' product.pk %}">Delete</a>
-    {% endif %}
+<div class="product-detail-layout">
+    <div>
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="product-image" alt="{{ product.name }}">
+        {% else %}
+            <div class="product-image product-image-placeholder large">{{ product.category|slice:":1" }}</div>
+        {% endif %}
+    </div>
+    <div class="product-info">
+        <span class="eyebrow">{{ product.category }}</span>
+        <h1>{{ product.name }}</h1>
+        <p class="product-price">FCFA {{ product.price }}</p>
+        {% converted_prices product.price as converted %}
+        {% if converted %}
+            <p class="converted-price detail">Approx. ${{ converted.USD }} / EUR {{ converted.EUR }}</p>
+        {% endif %}
+        <div class="product-meta">
+            <span class="product-meta-item">{{ product.condition|capfirst }}</span>
+            <span class="product-meta-item">{{ product.availability_status|capfirst }}</span>
+            <span class="product-meta-item">Rating {{ product.seller.average_rating|floatformat:1 }}/5</span>
+        </div>
+        <p>{{ product.description|default:'No description has been added for this product.' }}</p>
+        <div class="seller-info">
+            <strong>Seller:</strong> {{ product.seller.username }}
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            {% if can_request %}
+                <a class="btn btn-primary" href="{% url 'requestsystem:request_create' product.pk %}">Send request</a>
+            {% endif %}
+            {% if can_edit %}
+                <a class="btn btn-secondary" href="{% url 'products:product_update' product.pk %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'products:product_delete' product.pk %}">Delete</a>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
 {% if similar_products %}
-    <div class="card p-3">
-        <h3>Similar Products</h3>
-        <div class="row">
+    <section class="section-block">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">Related</span>
+                <h2>Similar Products</h2>
+            </div>
+        </div>
+        <div class="row g-4">
             {% for similar in similar_products %}
-                <div class="col-md-3 mb-3">
-                    <div class="card h-100">
+                <div class="col-md-3">
+                    <div class="card product-card h-100">
                         {% if similar.image %}
                             <img src="{{ similar.image.url }}" class="card-img-top" alt="{{ similar.name }}">
+                        {% else %}
+                            <div class="product-image-placeholder">{{ similar.category|slice:":1" }}</div>
                         {% endif %}
                         <div class="card-body">
                             <h5 class="card-title">{{ similar.name }}</h5>
-                            <p class="card-text">FCFA {{ similar.price }}</p>
+                            <p class="price-line">FCFA {{ similar.price }}</p>
                             <a href="{% url 'products:product_detail' similar.pk %}" class="btn btn-sm btn-primary">View</a>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
-    </div>
+    </section>
 {% endif %}
 {% endblock %}

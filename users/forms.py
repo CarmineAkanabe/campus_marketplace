@@ -25,6 +25,11 @@ class UserRegisterForm(UserCreationForm):
             'password2',
         ]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.setdefault('class', 'form-control')
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:

@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Request Detail</h1>
-<div class="card mb-3">
+<div class="page-header compact">
+    <span class="eyebrow">Request</span>
+    <h1>Request Detail</h1>
+</div>
+<div class="card request-card mb-3">
     <div class="card-body">
         <p><strong>Product:</strong> {{ request_item.product.name }}</p>
         <p><strong>Buyer:</strong> {{ request_item.buyer.username }}</p>
@@ -14,7 +17,7 @@
 </div>
 
 {% if user == request_item.product.seller %}
-    <form method="post" class="mb-3">
+    <form method="post" class="form-panel small mb-3">
         {% csrf_token %}
         <div class="mb-3">
             <label for="status" class="form-label">Update status</label>

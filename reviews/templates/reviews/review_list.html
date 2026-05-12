@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>My Reviews</h1>
-<table class="table table-bordered">
-    <thead>
+<div class="page-header compact">
+    <span class="eyebrow">Buyer feedback</span>
+    <h1>My Reviews</h1>
+</div>
+<div class="table-panel">
+<table class="table align-middle">
+    <thead class="table-light">
         <tr>
             <th>Seller</th>
             <th>Rating</th>
@@ -26,4 +30,5 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 {% endblock %}

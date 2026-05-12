@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="page-header">
+    <span class="eyebrow">About the project</span>
+    <h1>Campus Marketplace</h1>
+    <p>A focused Django application for campus buying and selling, built to demonstrate clean architecture, user roles, CRUD workflows, notifications, recommendations, and simple online data integration.</p>
+</section>
+
+<section class="section-block">
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">Team</span>
+            <h2>Project Contributors</h2>
+        </div>
+    </div>
+    <div class="row g-4">
+        {% for member in team_members %}
+            <div class="col-md-6">
+                <div class="card team-card h-100">
+                    <div class="card-body">
+                        <h3>{{ member.name }}</h3>
+                        <p class="text-muted">{{ member.role }}</p>
+                        <a href="{{ member.github }}" target="_blank" rel="noopener">{{ member.github }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

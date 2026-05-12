@@ -1,21 +1,32 @@
 {% extends 'base.html' %}
+{% load currency %}
 
 {% block content %}
-<h1>Available Products</h1>
-<form method="get" class="row g-3 mb-4">
+<div class="page-header compact">
+    <span class="eyebrow">Marketplace</span>
+    <h1>Available Products</h1>
+    <p>Search current campus listings and send a request when something fits what you need.</p>
+</div>
+
+<form method="get" class="search-filters row g-3 align-items-end">
     <div class="col-md-3">
+        <label class="form-label" for="q">Keyword</label>
         <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ search_values.q }}">
     </div>
     <div class="col-md-2">
+        <label class="form-label" for="category">Category</label>
         <input type="text" name="category" class="form-control" placeholder="Category" value="{{ search_values.category }}">
     </div>
     <div class="col-md-2">
+        <label class="form-label" for="min_price">Min price</label>
         <input type="text" name="min_price" class="form-control" placeholder="Min price" value="{{ search_values.min_price }}">
     </div>
     <div class="col-md-2">
+        <label class="form-label" for="max_price">Max price</label>
         <input type="text" name="max_price" class="form-control" placeholder="Max price" value="{{ search_values.max_price }}">
     </div>
     <div class="col-md-2">
+        <label class="form-label" for="condition">Condition</label>
         <select name="condition" class="form-select">
             <option value="">Any condition</option>
             <option value="new" {% if search_values.condition == 'new' %}selected{% endif %}>New</option>
@@ -23,7 +34,7 @@
         </select>
     </div>
     <div class="col-md-1">
-        <button type="submit" class="btn btn-primary">Filter</button>
+        <button type="submit" class="btn btn-primary w-100">Filter</button>
     </div>
 </form>
 
@@ -33,22 +44,34 @@
     </div>
 {% endif %}
 
-<div class="row">
+<div class="row g-4">
     {% for product in products %}
-        <div class="col-md-4 mb-3">
-            <div class="card h-100">
+        <div class="col-md-6 col-lg-4">
+            <div class="card product-card h-100">
                 {% if product.image %}
                     <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                    <div class="product-image-placeholder">{{ product.category|slice:":1" }}</div>
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title"><a href="{% url 'products:product_detail' product.pk %}">{{ product.name }}</a></h5>
                     <p class="card-text">{{ product.category }} &middot; {{ product.condition|capfirst }}</p>
-                    <p class="card-text">Price: FCFA {{ product.price }}</p>
+                    <p class="price-line">FCFA {{ product.price }}</p>
+                    {% converted_prices product.price as converted %}
+                    {% if converted %}
+                        <p class="converted-price">Approx. ${{ converted.USD }} / EUR {{ converted.EUR }}</p>
+                    {% endif %}
+                    <a href="{% url 'products:product_detail' product.pk %}" class="btn btn-sm btn-outline-primary mt-2">View details</a>
                 </div>
             </div>
         </div>
     {% empty %}
-        <div class="col-12"><p>No products found.</p></div>
+        <div class="col-12">
+            <div class="empty-state">
+                <h3>No products found</h3>
+                <p>Try a different search or check back after sellers add new listings.</p>
+            </div>
+        </div>
     {% endfor %}
 </div>
 {% endblock %}

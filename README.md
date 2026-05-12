@@ -1,672 +1,121 @@
-# Campus Market Intelligence Platform
+# Campus Marketplace
 
-## Project Overview
+Campus Marketplace is a Django web application for students and small campus vendors. Buyers can browse products, search listings, send purchase requests, review sellers, and receive notifications. Sellers can create products, manage inventory, respond to requests, and view dashboard/analytics summaries.
 
-The Campus Market Intelligence Platform is a Django + MySQL web application designed for students and small campus vendors.
+The project is intentionally simple enough to explain in an academic defense while still showing a clean modular Django structure.
 
-The platform allows sellers to post products and buyers to browse, search, compare, and request products.
+## Core Features
 
-The system combines:
-- Local marketplace functionalities
-- CRUD operations
-- Dashboard systems
-- Notifications
-- Recommendation logic
-- Optional online features such as scraping and analytics
+- Buyer and seller registration/login with role-based dashboards
+- Product CRUD for sellers
+- Product browsing, search, filtering, and detail pages
+- Purchase request workflow with statuses: pending, accepted, rejected, completed
+- Seller review and rating system
+- Notifications for requests, status updates, and reviews
+- Product recommendations based on recent product views
+- Basic analytics for searches, products, and seller performance
+- Optional online currency conversion for FCFA prices
 
-The goal of this project is not full implementation, but rather:
-- System design
-- Software architecture
-- Database architecture
-- Folder structure
-- Feature planning
-- Application flow
+## Optional Online Feature
 
----
+Product prices are stored and shown in FCFA. Where exchange rates are available, product cards and product details also show approximate USD/EUR values. FCFA to EUR uses the fixed peg, and EUR to USD is fetched online.
 
-# Main Objectives
+The app uses the public Frankfurter exchange-rate API:
 
-## Academic Objectives
+- Website: https://frankfurter.dev/
+- API base: `https://api.frankfurter.dev`
+- No API key required
 
-This project demonstrates:
-- Django MVT architecture
-- MySQL database design
-- Modular application structure
-- User authentication and authorization
-- CRUD operations
-- Dashboard systems
-- Data relationships
-- Service-based architecture
-- Online data integration concepts
+If the API is unavailable, the app simply shows FCFA prices only.
 
----
+## Tech Stack
 
-# Users of the System
+- Python
+- Django
+- SQLite for local development
+- Optional MySQL for production-style deployment
+- Bootstrap 5
+- Requests
+- Pillow
+- python-dotenv
 
-## 1. Buyer
+## Project Structure
 
-The Buyer can:
-- Register and login
-- Browse products
-- Search products
-- Filter products
-- Save favorite products
-- Send purchase requests
-- View recommendations
-- Review sellers
-- Receive notifications
-
----
-
-## 2. Seller
-
-The Seller can:
-- Register and login
-- Create products
-- Edit products
-- Delete products
-- Upload product images
-- Manage inventory status
-- View buyer requests
-- Respond to requests
-- View analytics dashboard
-- Receive notifications
-
----
-
-## Superuser (Django Admin)
-
-The Django superuser manages:
-- Users
-- Products
-- Reports
-- Scraped data
-- Platform moderation
-- Notifications
-
-The superuser is NOT considered one of the two system users.
-
----
-
-# Main Features
-
-# Local Functionalities (Core Features)
-
-## Authentication System
-
-Features:
-- User registration
-- User login/logout
-- Password hashing
-- Role selection (Buyer or Seller)
-- Session management
-
----
-
-## Product Management (CRUD)
-
-Seller functionalities:
-- Create product
-- Read/View product
-- Update product
-- Delete product
-
-Product fields:
-- Product name
-- Description
-- Category
-- Price
-- Product image
-- Product condition
-- Availability status
-
----
-
-## Product Search and Filtering
-
-Buyers can search products using:
-- Keywords
-- Category
-- Price range
-- Seller
-- Product condition
-- Availability
-
----
-
-## Favorites/Wishlist
-
-Buyers can:
-- Save products
-- Remove saved products
-- View favorite products
-
----
-
-## Purchase Request System
-
-Buyers can send requests to sellers.
-
-Request features:
-- Request message
-- Request status
-- Request history
-- Seller response
-
-Request statuses:
-- Pending
-- Accepted
-- Rejected
-- Completed
-
----
-
-## Review and Rating System
-
-Buyers can:
-- Rate sellers
-- Leave comments
-- View seller ratings
-
----
-
-## Notification System
-
-Notifications include:
-- New requests
-- Request updates
-- Product updates
-- New reviews
-
----
-
-## User Dashboard
-
-### Buyer Dashboard
-
-Displays:
-- Favorite products
-- Recent requests
-- Notifications
-- Recommended products
-
-### Seller Dashboard
-
-Displays:
-- Product statistics
-- Request statistics
-- Product performance
-- Notifications
+```txt
+campus_marketplace/
+├── analytics/
+├── config/
+├── core/
+├── dashboard/
+├── notifications/
+├── products/
+├── recommendations/
+├── requestsystem/
+├── reviews/
+├── static/
+├── templates/
+├── users/
+├── manage.py
+├── requirements.txt
+├── README.md
+├── DOCUMENTATION.md
+└── TODO.md
+```
 
 ## Setup
 
 1. Create and activate a virtual environment.
-2. Install dependencies from `requirements.txt`.
-3. Run `python manage.py makemigrations` and `python manage.py migrate`.
-4. Create a superuser with `python manage.py createsuperuser`.
-5. Start the development server with `python manage.py runserver`.
+2. Install dependencies:
 
-## Notes
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-- `config/settings.py` uses SQLite by default for local development.
-- `AUTH_USER_MODEL = 'users.User'` enables custom buyer/seller roles.
-- Phase 6 includes unit tests for models and views as well as improved documentation.
+3. Run migrations:
 
----
+   ```bash
+   python manage.py migrate
+   ```
 
-# Optional Online Features
+4. Optional: seed demo users and products:
 
-These features are conceptual and may not be fully implemented.
+   ```bash
+   python manage.py seed_demo_data
+   ```
 
----
+5. Start the development server:
 
-## Price Scraping System
+   ```bash
+   python manage.py runserver
+   ```
 
-The system can scrape prices from:
-- Jumia Cameroon
-- Local marketplace websites
-- Classified listing websites
+## Demo Accounts
 
-Purpose:
-- Compare market prices
-- Suggest fair product prices
-- Detect overpriced items
+After running `seed_demo_data`, these local accounts are available:
 
-Possible tools:
-- BeautifulSoup
-- Requests
+- Seller: `demo_seller` / `demo12345`
+- Buyer: `demo_buyer` / `demo12345`
 
----
+## Environment
 
-## Recommendation Engine
+The app reads `SECRET_KEY` from `.env` or the environment. A harmless local fallback key is included so the project can run easily during demos.
 
-Simple recommendation logic:
+Example `.env`:
 
-Examples:
-- Users interested in phones may also view accessories
-- Related products suggestions
-- Popular products recommendations
-
----
-
-## Trending Products Analytics
-
-Displays:
-- Most viewed products
-- Most searched categories
-- Trending products
-
----
-
-## Currency Conversion API
-
-Optional API integration:
-- Convert FCFA to USD/EUR
-
----
-
-# System Architecture
-
-## Architecture Pattern
-
-The system follows Django's MVT architecture:
-
-- Model
-- View
-- Template
-
----
-
-## Modular Design
-
-The project is separated into multiple Django apps.
-
-Advantages:
-- Maintainability
-- Scalability
-- Reusability
-- Separation of concerns
-
----
-
-# Suggested Django Apps
-
-```txt
-campus_market/
-│
-├── users/
-├── products/
-├── requestsystem/
-├── reviews/
-├── notifications/
-├── analytics/
-├── scraper/
-├── recommendations/
-├── dashboard/
-└── core/
+```env
+SECRET_KEY=replace-this-with-a-real-secret-for-production
 ```
 
----
+## Testing
 
-# Full Project Folder Structure
+Run:
 
-```txt
-campus_marketplace/
-│
-├── manage.py
-├── requirements.txt
-├── README.md
-├── .env
-│
-├── config/
-│   ├── __init__.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── asgi.py
-│   └── wsgi.py
-│
-├── users/
-│   ├── migrations/
-│   ├── templates/users/
-│   ├── static/users/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── urls.py
-│   ├── views.py
-│   ├── tests.py
-│   └── services.py
-│
-├── products/
-│   ├── migrations/
-│   ├── templates/products/
-│   ├── static/products/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── urls.py
-│   ├── views.py
-│   ├── tests.py
-│   └── services.py
-│
-├── requestsystem/
-│   ├── migrations/
-│   ├── templates/requestsystem/
-│   ├── static/requestsystem/
-│   ├── __init__.py
-│   ├── admin.py
-│   ├── apps.py
-│   ├── forms.py
-│   ├── models.py
-│   ├── urls.py
-│   ├── views.py
-│   └── services.py
-│
-├── reviews/
-├── notifications/
-├── analytics/
-├── scraper/
-├── recommendations/
-├── dashboard/
-├── media/
-├── static/
-└── templates/
+```bash
+python manage.py test
 ```
 
----
+On Windows with the included virtual environment:
 
-# Database Design
-
-# Main Tables
-
-## users
-
-```txt
-id
-full_name
-email
-phone
-password
-role
-location
-profile_image
-created_at
+```powershell
+.venv\Scripts\python.exe manage.py test
 ```
-
----
-
-## products
-
-```txt
-id
-seller_id
-name
-description
-category
-price
-condition
-image
-availability_status
-created_at
-updated_at
-```
-
----
-
-## purchase_requests
-
-```txt
-id
-buyer_id
-product_id
-message
-status
-created_at
-updated_at
-```
-
----
-
-## reviews
-
-```txt
-id
-buyer_id
-seller_id
-rating
-comment
-created_at
-```
-
----
-
-## notifications
-
-```txt
-id
-user_id
-title
-message
-is_read
-created_at
-```
-
----
-
-## favorites
-
-```txt
-id
-buyer_id
-product_id
-created_at
-```
-
----
-
-## scraped_prices
-
-```txt
-id
-product_name
-source
-price
-scraped_at
-```
-
----
-
-# Suggested URLs
-
-## Authentication
-
-```txt
-/register/
-/login/
-/logout/
-```
-
----
-
-## Products
-
-```txt
-/products/
-/products/create/
-/products/<id>/
-/products/<id>/edit/
-/products/<id>/delete/
-```
-
----
-
-## Requests
-
-```txt
-/requests/
-/requests/create/
-/requests/<id>/
-```
-
----
-
-## Reviews
-
-```txt
-/reviews/
-/reviews/create/
-```
-
----
-
-## Dashboard
-
-```txt
-/dashboard/buyer/
-/dashboard/seller/
-```
-
----
-
-# Suggested Pages
-
-## Public Pages
-
-- Home Page
-- Product Listings
-- Product Details
-- Login Page
-- Register Page
-- About Page
-
----
-
-## Buyer Pages
-
-- Buyer Dashboard
-- Favorite Products
-- Notifications
-- Requests History
-- Recommendations
-
----
-
-## Seller Pages
-
-- Seller Dashboard
-- Product Management
-- Request Management
-- Analytics Page
-- Notifications
-
----
-
-# Security Considerations
-
-The system should include:
-- Password hashing
-- Authentication checks
-- Role-based access control
-- CSRF protection
-- Form validation
-- Secure file uploads
-
----
-
-# Technologies Used
-
-## Backend
-- Django
-- Python
-
-## Database
-- MySQL
-
-## Frontend
-- HTML
-- CSS
-- Bootstrap
-- JavaScript
-
-## Optional Libraries
-- BeautifulSoup
-- Requests
-
----
-
-# Future Improvements
-
-Possible future upgrades:
-- Real-time chat
-- AI recommendations
-- Mobile application
-- Payment integration
-- SMS notifications
-- Email verification
-- Product image recognition
-- Geo-location support
-
----
-
-# Development Roadmap
-
-## Phase 1 — Planning
-
-- Define requirements
-- Design database
-- Define architecture
-- Create UI wireframes
-
----
-
-## Phase 2 — Backend Structure
-
-- Create Django project
-- Configure MySQL
-- Create apps
-- Configure authentication
-
----
-
-## Phase 3 — CRUD Features
-
-- Product CRUD
-- Request CRUD
-- Review CRUD
-- Notifications
-
----
-
-## Phase 4 — Advanced Features
-
-- Recommendations
-- Analytics
-- Scraping system
-- Dashboard statistics
-
----
-
-## Phase 5 — Testing and Documentation
-
-- Test application structure
-- Review architecture
-- Create project documentation
-
----
-
-# Conclusion
-
-The Campus Market Intelligence Platform is a modern Django web application concept that combines:
-- Marketplace management
-- CRUD operations
-- Dashboard systems
-- Recommendation concepts
-- Scraping architecture
-- Analytics systems
-
-The project is intentionally designed to remain simple enough for students while still appearing innovative and technically advanced during project defense and evaluation.
-

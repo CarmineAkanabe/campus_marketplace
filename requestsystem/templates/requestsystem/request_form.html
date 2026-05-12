@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Send Request</h1>
-<p>Product: <strong>{{ product.name }}</strong></p>
-<form method="post">
-    {% csrf_token %}
-    <div class="mb-3">
-        <label for="message" class="form-label">Request message</label>
-        <textarea class="form-control" id="message" name="message" rows="4"></textarea>
+<div class="form-page">
+    <div class="form-panel small">
+        <span class="eyebrow">Purchase request</span>
+        <h1>Send Request</h1>
+        <p class="text-muted">Product: <strong>{{ product.name }}</strong></p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="message" class="form-label">Request message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Ask about availability, pickup time, or payment details."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send request</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary">Send request</button>
-</form>
+</div>
 {% endblock %}

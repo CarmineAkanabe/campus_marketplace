@@ -7,6 +7,12 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserProfileForm
 
 
+def style_auth_form(form):
+    for field in form.fields.values():
+        field.widget.attrs.setdefault('class', 'form-control')
+    return form
+
+
 def register_view(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -22,13 +28,13 @@ def register_view(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = style_auth_form(AuthenticationForm(request, data=request.POST))
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             return redirect('dashboard:buyer_dashboard')
     else:
-        form = AuthenticationForm()
+        form = style_auth_form(AuthenticationForm())
     return render(request, 'users/login.html', {'form': form})
 
 

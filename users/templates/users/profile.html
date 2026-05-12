@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Profile</h1>
-<div class="card mb-3">
+<div class="page-header compact">
+    <span class="eyebrow">Account</span>
+    <h1>Profile</h1>
+</div>
+<div class="card profile-card mb-3">
     <div class="card-body">
         <h5 class="card-title">{{ user.username }}</h5>
         <p><strong>Role:</strong> {{ user.role|capfirst }}</p>
@@ -15,6 +18,8 @@
         {% endif %}
     </div>
 </div>
-<a href="{% url 'users:profile_edit' %}" class="btn btn-primary">Edit Profile</a>
-<a href="{% url 'core:home' %}" class="btn btn-secondary">Back to Home</a>
+<div class="d-flex gap-2">
+    <a href="{% url 'users:profile_edit' %}" class="btn btn-primary">Edit Profile</a>
+    <a href="{% url 'core:home' %}" class="btn btn-secondary">Back to Home</a>
+</div>
 {% endblock %}

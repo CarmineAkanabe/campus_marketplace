@@ -1,25 +1,36 @@
 {% extends 'base.html' %}
+{% load currency %}
 
 {% block content %}
-<h1>Recommended for You</h1>
-<div class="row">
+<div class="page-header compact">
+    <span class="eyebrow">Personalized picks</span>
+    <h1>Recommended for You</h1>
+    <p>Suggestions are based on product categories and listings you have recently viewed.</p>
+</div>
+<div class="row g-4">
     {% for product in recommendations %}
-        <div class="col-md-3 mb-3">
-            <div class="card h-100">
+        <div class="col-md-6 col-lg-3">
+            <div class="card product-card h-100">
                 {% if product.image %}
                     <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                {% else %}
+                    <div class="product-image-placeholder">{{ product.category|slice:":1" }}</div>
                 {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ product.name }}</h5>
                     <p class="card-text">{{ product.category }}</p>
-                    <p class="card-text text-muted">FCFA {{ product.price }}</p>
+                    <p class="price-line">FCFA {{ product.price }}</p>
+                    {% converted_prices product.price as converted %}
+                    {% if converted %}
+                        <p class="converted-price">Approx. ${{ converted.USD }} / EUR {{ converted.EUR }}</p>
+                    {% endif %}
                     <a href="{% url 'products:product_detail' product.pk %}" class="btn btn-sm btn-primary">View</a>
                 </div>
             </div>
         </div>
     {% empty %}
         <div class="col-12">
-            <div class="alert alert-info">No recommendations available yet.</div>
+            <div class="empty-state">No recommendations available yet.</div>
         </div>
     {% endfor %}
 </div>
