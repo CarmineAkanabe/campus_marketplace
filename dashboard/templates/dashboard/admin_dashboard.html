@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header compact">
+    <span class="eyebrow">Admin dashboard</span>
+    <h1>Platform Overview</h1>
+    <p>Quick charts for users, products, and request activity. Use the Django admin panel for management actions.</p>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="dashboard-card stat-card">
+            <h3>Total Users</h3>
+            <p class="display-6">{{ total_people }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard-card stat-card">
+            <h3>Total Products</h3>
+            <p class="display-6">{{ total_products }}</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard-card stat-card">
+            <h3>Total Requests</h3>
+            <p class="display-6">{{ total_requests }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="dashboard-card">
+            <h3>Users Chart</h3>
+            {% for item in user_chart_stats %}
+                <div class="mini-chart-row">
+                    <div class="mini-chart-label">
+                        <span>{{ item.label }}</span>
+                        <strong>{{ item.count }}</strong>
+                    </div>
+                    <div class="mini-chart-track">
+                        <div class="mini-chart-fill" style="width: {{ item.percent }}%"></div>
+                    </div>
+                    <small class="chart-percent">{{ item.percent }}%</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard-card">
+            <h3>Products Chart</h3>
+            {% for item in product_chart_stats %}
+                <div class="mini-chart-row">
+                    <div class="mini-chart-label">
+                        <span>{{ item.label }}</span>
+                        <strong>{{ item.count }}</strong>
+                    </div>
+                    <div class="mini-chart-track">
+                        <div class="mini-chart-fill" style="width: {{ item.percent }}%"></div>
+                    </div>
+                    <small class="chart-percent">{{ item.percent }}%</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard-card">
+            <h3>Requests Chart</h3>
+            {% for item in request_chart_stats %}
+                <div class="mini-chart-row">
+                    <div class="mini-chart-label">
+                        <span>{{ item.label }}</span>
+                        <strong>{{ item.count }}</strong>
+                    </div>
+                    <div class="mini-chart-track">
+                        <div class="mini-chart-fill" style="width: {{ item.percent }}%"></div>
+                    </div>
+                    <small class="chart-percent">{{ item.percent }}%</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-card mt-4">
+    <h3>Management</h3>
+    <p class="text-muted">Create, edit, and delete users, products, requests, reviews, notifications, and analytics records from the Django admin panel.</p>
+    <a class="btn btn-primary" href="{% url 'admin:index' %}">Open Admin Panel</a>
+</div>
+{% endblock %}

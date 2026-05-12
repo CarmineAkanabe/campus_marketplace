@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.shortcuts import redirect, render
 
 from products.models import Product
@@ -13,6 +14,8 @@ def percent(part, whole):
 
 @login_required
 def buyer_dashboard(request):
+    if request.user.is_superuser:
+        return redirect('dashboard:admin_dashboard')
     if getattr(request.user, 'role', None) == 'seller':
         return redirect('dashboard:seller_dashboard')
 
@@ -42,6 +45,8 @@ def buyer_dashboard(request):
 
 @login_required
 def seller_dashboard(request):
+    if request.user.is_superuser:
+        return redirect('dashboard:admin_dashboard')
     if getattr(request.user, 'role', None) != 'seller':
         return redirect('dashboard:buyer_dashboard')
 
@@ -67,4 +72,43 @@ def seller_dashboard(request):
             {'label': 'Pending requests', 'count': pending_requests, 'percent': percent(pending_requests, request_total)},
             {'label': 'Completed requests', 'count': completed_requests, 'percent': percent(completed_requests, request_total)},
         ],
+    })
+
+
+@login_required
+def admin_dashboard(request):
+    if not request.user.is_superuser:
+        return redirect('dashboard:buyer_dashboard')
+
+    User = get_user_model()
+    buyers = User.objects.filter(role=User.BUYER, is_superuser=False).count()
+    sellers = User.objects.filter(role=User.SELLER, is_superuser=False).count()
+    admins = User.objects.filter(is_superuser=True).count()
+    total_people = buyers + sellers + admins
+
+    total_products = Product.objects.count()
+    available_products = Product.objects.filter(availability_status=Product.AVAILABILITY_AVAILABLE).count()
+    sold_products = Product.objects.filter(availability_status=Product.AVAILABILITY_SOLD).count()
+
+    total_requests = PurchaseRequest.objects.count()
+    pending_requests = PurchaseRequest.objects.filter(status=PurchaseRequest.STATUS_PENDING).count()
+    completed_requests = PurchaseRequest.objects.filter(status=PurchaseRequest.STATUS_COMPLETED).count()
+
+    return render(request, 'dashboard/admin_dashboard.html', {
+        'user_chart_stats': [
+            {'label': 'Buyers', 'count': buyers, 'percent': percent(buyers, total_people)},
+            {'label': 'Sellers', 'count': sellers, 'percent': percent(sellers, total_people)},
+            {'label': 'Admins', 'count': admins, 'percent': percent(admins, total_people)},
+        ],
+        'product_chart_stats': [
+            {'label': 'Available products', 'count': available_products, 'percent': percent(available_products, total_products)},
+            {'label': 'Sold products', 'count': sold_products, 'percent': percent(sold_products, total_products)},
+        ],
+        'request_chart_stats': [
+            {'label': 'Pending requests', 'count': pending_requests, 'percent': percent(pending_requests, total_requests)},
+            {'label': 'Completed requests', 'count': completed_requests, 'percent': percent(completed_requests, total_requests)},
+        ],
+        'total_people': total_people,
+        'total_products': total_products,
+        'total_requests': total_requests,
     })

@@ -32,6 +32,8 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            if user.is_superuser:
+                return redirect('dashboard:admin_dashboard')
             return redirect('dashboard:buyer_dashboard')
     else:
         form = style_auth_form(AuthenticationForm())
