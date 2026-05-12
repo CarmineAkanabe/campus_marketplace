@@ -33,6 +33,18 @@ class PurchaseRequestTest(TestCase):
         self.assertEqual(request_item.status, PurchaseRequest.STATUS_PENDING)
         self.assertEqual(request_item.buyer, self.buyer)
 
+    def test_superuser_cannot_create_purchase_request(self):
+        admin_user = User.objects.create_superuser(username='admin', password='pass')
+        self.client.force_login(admin_user)
+
+        response = self.client.post(
+            reverse('requestsystem:request_create', args=[self.product.pk]),
+            {'message': 'Admin should not request products.'},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(PurchaseRequest.objects.count(), 0)
+
     def test_seller_can_update_request_status(self):
         request_item = PurchaseRequest.objects.create(
             buyer=self.buyer,

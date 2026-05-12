@@ -2,23 +2,30 @@
 
 {% block content %}
 <div class="form-page">
-    <div class="form-panel">
-        <span class="eyebrow">Account</span>
-        <h1>Edit Profile</h1>
-        <form method="post" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
-            {% for field in form %}
-                <div class="mb-3">
-                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+    <div class="form-panel auth-panel wide">
+        <div class="form-aside">
+            <span class="eyebrow">Account</span>
+            <h2>Edit Profile</h2>
+            <p>Keep your contact details and profile image up to date for smoother campus exchanges.</p>
+        </div>
+        <div class="form-main">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="row g-3">
+                    {% for field in form %}
+                        <div class="{% if field.name == 'profile_image' or field.name == 'email' %}col-12{% else %}col-md-6{% endif %}">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <a href="{% url 'users:profile' %}" class="btn btn-secondary">Cancel</a>
-            </div>
-        </form>
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{% url 'users:profile' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -38,6 +38,23 @@
 <div class="row g-4">
     <div class="col-md-6">
         <div class="dashboard-card">
+            <h3>Seller Chart</h3>
+            {% for item in seller_chart_stats %}
+                <div class="mini-chart-row">
+                    <div class="mini-chart-label">
+                        <span>{{ item.label }}</span>
+                        <strong>{{ item.count }}</strong>
+                    </div>
+                    <div class="mini-chart-track">
+                        <div class="mini-chart-fill" style="width: {{ item.percent }}%"></div>
+                    </div>
+                    <small class="chart-percent">{{ item.percent }}%</small>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="dashboard-card">
             <h3>Your Products</h3>
             <ul class="list-group list-group-flush">
                 {% for product in products %}
@@ -50,7 +67,7 @@
             </ul>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="dashboard-card">
             <h3>Recent Incoming Requests</h3>
             <ul class="list-group list-group-flush">

@@ -59,7 +59,12 @@ def product_detail(request, pk):
     # Track view for recommendations
     track_product_view(request.user, product)
     
-    can_request = request.user.is_authenticated and getattr(request.user, 'role', None) == 'buyer'
+    can_request = (
+        request.user.is_authenticated
+        and getattr(request.user, 'role', None) == 'buyer'
+        and not request.user.is_staff
+        and not request.user.is_superuser
+    )
     can_edit = request.user.is_authenticated and request.user == product.seller
     review_request = None
 

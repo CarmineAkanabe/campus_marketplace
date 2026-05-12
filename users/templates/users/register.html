@@ -2,22 +2,31 @@
 
 {% block content %}
 <div class="form-page">
-    <div class="form-panel">
-        <span class="eyebrow">Join the marketplace</span>
-        <h1>Create Account</h1>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                <div class="mb-3">
-                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
-                    {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+    <div class="form-panel auth-panel wide">
+        <div class="form-aside">
+            <span class="eyebrow">Join CampusMart</span>
+            <h2>Create your campus account</h2>
+            <p>Choose buyer or seller during registration. Sellers can publish products, while buyers can send requests and leave reviews.</p>
+        </div>
+        <div class="form-main">
+            <span class="eyebrow">New account</span>
+            <h1>Create Account</h1>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="row g-3">
+                    {% for field in form %}
+                        <div class="{% if field.name == 'password1' or field.name == 'password2' %}col-md-6{% elif field.name == 'username' or field.name == 'email' or field.name == 'role' or field.name == 'phone' %}col-md-6{% else %}col-md-12{% endif %}">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
+                            {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary w-100">Create account</button>
-        </form>
+                <button type="submit" class="btn btn-primary w-100 mt-4">Create account</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -35,6 +35,14 @@ class ProductViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.product.description)
 
+    def test_product_detail_hides_request_button_for_superuser(self):
+        admin_user = User.objects.create_superuser(username='admin', password='pass')
+        self.client.force_login(admin_user)
+
+        response = self.client.get(reverse('products:product_detail', args=[self.product.pk]))
+
+        self.assertNotContains(response, 'Send request')
+
     def test_product_detail_shows_review_link_for_accepted_buyer_request(self):
         buyer = User.objects.create_user(username='buyer', password='pass', role=User.BUYER)
         purchase_request = PurchaseRequest.objects.create(

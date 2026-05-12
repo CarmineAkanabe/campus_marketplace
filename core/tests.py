@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.contrib import admin
 from django.core.cache import cache
 from django.core.management import call_command
 from django.test import TestCase
@@ -8,7 +9,9 @@ from unittest.mock import Mock, patch
 import requests
 
 from core.services import convert_xaf_price, search_product_image
+from analytics.models import ProductAnalytics, SearchQuery
 from products.models import Product
+from recommendations.models import ProductView
 
 User = get_user_model()
 
@@ -118,4 +121,11 @@ class ProjectCleanupTests(TestCase):
         User = get_user_model()
         self.assertEqual(User.objects.filter(username='demo_seller').count(), 1)
         self.assertEqual(User.objects.filter(username='demo_buyer').count(), 1)
-        self.assertEqual(Product.objects.filter(seller__username='demo_seller').count(), 4)
+        self.assertEqual(Product.objects.filter(seller__username='demo_seller').count(), 6)
+
+    def test_admin_can_manage_core_models(self):
+        self.assertTrue(admin.site.is_registered(User))
+        self.assertTrue(admin.site.is_registered(Product))
+        self.assertTrue(admin.site.is_registered(SearchQuery))
+        self.assertTrue(admin.site.is_registered(ProductAnalytics))
+        self.assertTrue(admin.site.is_registered(ProductView))

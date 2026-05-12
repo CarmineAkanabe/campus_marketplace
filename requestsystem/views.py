@@ -11,7 +11,7 @@ from .models import PurchaseRequest
 @login_required
 def request_create(request, product_id):
     product = get_object_or_404(Product, pk=product_id, availability_status=Product.AVAILABILITY_AVAILABLE)
-    if getattr(request.user, 'role', None) != 'buyer':
+    if getattr(request.user, 'role', None) != 'buyer' or request.user.is_staff or request.user.is_superuser:
         messages.error(request, 'Only buyers can send requests.')
         return redirect('products:product_detail', pk=product.pk)
 
@@ -33,6 +33,9 @@ def request_create(request, product_id):
 
 @login_required
 def request_list(request):
+    if request.user.is_staff or request.user.is_superuser:
+        messages.error(request, 'Admins manage requests from the admin panel.')
+        return redirect('products:product_list')
     requests = PurchaseRequest.objects.filter(buyer=request.user).order_by('-created_at')
     return render(request, 'requestsystem/request_list.html', {'requests': requests})
 

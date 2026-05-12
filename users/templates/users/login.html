@@ -2,21 +2,28 @@
 
 {% block content %}
 <div class="form-page">
-    <div class="form-panel small">
-        <span class="eyebrow">Welcome back</span>
-        <h1>Login</h1>
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                <div class="mb-3">
-                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                    {{ field }}
-                    {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
-                </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary w-100">Login</button>
-        </form>
+    <div class="form-panel auth-panel">
+        <div class="form-aside">
+            <span class="eyebrow">CampusMart</span>
+            <h2>Welcome back</h2>
+            <p>Login to manage requests, products, recommendations, and seller activity.</p>
+        </div>
+        <div class="form-main">
+            <span class="eyebrow">Account access</span>
+            <h1>Login</h1>
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% for error in field.errors %}<div class="invalid-feedback d-block">{{ error }}</div>{% endfor %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

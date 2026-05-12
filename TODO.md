@@ -11,11 +11,11 @@
 - Buyer and seller dashboards
 - Recommendations based on product views
 - Search/product analytics
-- About page and footer
 - Simple currency conversion online feature
 - Keyword-based online image search for products without uploaded photos
 - Demo seed command
 - Cleaner Bootstrap-based styling
+- Admin panel access for superusers
 
 ## Not Included
 
@@ -36,7 +36,7 @@ python manage.py runserver
 
 ## Notes for Presentation
 
-- The online feature is intentionally small: FCFA prices can show approximate USD/EUR values from a public exchange-rate API.
-- The app still works if the API is unavailable.
+- The online features are intentionally small and explainable.
+- Converted prices and online images fail safely when internet access is unavailable.
 - The seed command provides quick demo data similar to Laravel seeders.
-- The project emphasizes clear Django architecture and explainable workflows over advanced production complexity.
+- Superusers manage users/products through Django admin rather than acting as buyers.

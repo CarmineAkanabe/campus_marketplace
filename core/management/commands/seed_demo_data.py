@@ -42,31 +42,45 @@ class Command(BaseCommand):
 
         products = [
             {
-                'name': 'Scientific Calculator',
-                'description': 'Reliable calculator for engineering and business courses.',
+                'name': 'Casio FX-991EX Scientific Calculator',
+                'description': 'Casio scientific calculator for engineering and business courses.',
                 'category': 'School Supplies',
                 'price': Decimal('8500.00'),
                 'condition': Product.CONDITION_USED,
             },
             {
-                'name': 'Accounting Textbook',
-                'description': 'Clean textbook with a few highlighted pages.',
+                'name': 'Introduction to Accounting Textbook',
+                'description': 'Accounting textbook with clean pages and a few useful highlights.',
                 'category': 'Books',
                 'price': Decimal('12000.00'),
                 'condition': Product.CONDITION_USED,
             },
             {
-                'name': 'Wireless Mouse',
-                'description': 'Compact mouse for laptops and computer lab work.',
+                'name': 'Logitech Wireless Mouse',
+                'description': 'Compact Logitech mouse for laptops and computer lab work.',
                 'category': 'Electronics',
                 'price': Decimal('6500.00'),
                 'condition': Product.CONDITION_NEW,
             },
             {
-                'name': 'Study Desk Lamp',
-                'description': 'Small desk lamp suitable for hostel rooms.',
+                'name': 'LED Study Desk Lamp',
+                'description': 'Adjustable LED desk lamp suitable for hostel study tables.',
                 'category': 'Room Essentials',
                 'price': Decimal('10000.00'),
+                'condition': Product.CONDITION_USED,
+            },
+            {
+                'name': 'JBL Bluetooth Speaker',
+                'description': 'Portable Bluetooth speaker for small rooms and study breaks.',
+                'category': 'Audio',
+                'price': Decimal('18000.00'),
+                'condition': Product.CONDITION_USED,
+            },
+            {
+                'name': 'HP Laptop Backpack',
+                'description': 'Durable backpack with a padded laptop compartment.',
+                'category': 'School Supplies',
+                'price': Decimal('15000.00'),
                 'condition': Product.CONDITION_USED,
             },
         ]

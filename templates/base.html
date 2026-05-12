@@ -31,14 +31,18 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="{% url 'products:product_list' %}">Products</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'notifications:notification_list' %}">Notifications{% if user.unread_notifications_count > 0 %} <span class="badge bg-danger">{{ user.unread_notifications_count }}</span>{% endif %}</a></li>
+                    {% if not user.is_superuser %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'notifications:notification_list' %}">Notifications{% if user.unread_notifications_count > 0 %} <span class="badge bg-danger">{{ user.unread_notifications_count }}</span>{% endif %}</a></li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Menu</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
-                            <li><a class="dropdown-item" href="{% url 'dashboard:buyer_dashboard' %}">Dashboard</a></li>
-                            {% if user.role == 'buyer' %}
+                            {% if not user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url 'dashboard:buyer_dashboard' %}">Dashboard</a></li>
+                            {% endif %}
+                            {% if user.role == 'buyer' and not user.is_staff and not user.is_superuser %}
                                 <li><a class="dropdown-item" href="{% url 'requestsystem:request_list' %}">My Requests</a></li>
                                 <li><a class="dropdown-item" href="{% url 'recommendations:recommendations_list' %}">Recommendations</a></li>
                                 <li><a class="dropdown-item" href="{% url 'reviews:review_list' %}">My Reviews</a></li>
@@ -47,12 +51,18 @@
                                 <li><a class="dropdown-item" href="{% url 'requestsystem:seller_request_list' %}">Incoming Requests</a></li>
                                 <li><a class="dropdown-item" href="{% url 'products:product_create' %}">Create Product</a></li>
                             {% endif %}
+                            {% if user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin Panel</a></li>
+                            {% endif %}
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a></li>
+                            {% if not user.is_superuser %}
+                                <li><a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a></li>
+                            {% endif %}
                             <li><a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a></li>
                         </ul>
                     </li>
                 {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'core:home' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">Register</a></li>
