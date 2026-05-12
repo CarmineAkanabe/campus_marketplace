@@ -1,4 +1,4 @@
-## CampusMart
+# CampusMart
 
 CampusMart is a Django web application for students and small campus vendors. Buyers can browse products, search listings, send purchase requests, review sellers, and receive notifications. Sellers can create products, manage inventory, respond to requests, and view dashboard/analytics summaries.
 
